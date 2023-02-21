@@ -3,8 +3,17 @@ template <typename T>
 class Node{
     public:
         T item;
-        size_t key;
-        Node next;
-        Node(T item);
-        void printNode();
+        std::size_t key;
+        Node* next;
+        Node() = default;
+        Node(T item){
+            this->item = item;
+            this->key = std::hash<T>{}(item);
+            this->next = nullptr;
+        }
+        void printNode(){
+            std::cout << "item: " << this->item << std::endl;
+            std::cout << "key: " << this->key << std::endl;
+            std::cout << "next: " << this->next << std::endl;
+        }
 };

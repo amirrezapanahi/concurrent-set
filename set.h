@@ -5,9 +5,9 @@
 template <typename T>
 class Set {
   public:
-    Node<T> head;
-    std::mutex lock;
-    virtual bool add(T item);
-    virtual bool remove(T item);
-    virtual bool contains(T item);
+    Node<T>* head;
+    std::recursive_mutex mutex;
+    virtual bool add(T element)=0;
+    virtual bool remove(T element)=0;
+    virtual bool contains(T element)=0;
 };
