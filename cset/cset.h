@@ -9,7 +9,7 @@ class CoarseSet : public Set<T>{
       this->head = new Node<T>();
       this->head->key = 0;
       this->head->next = new Node<T>();
-      this->head->next->key = INT64_MAX;
+      this->head->next->key = SIZE_MAX;
     }
     
     ~CoarseSet(){
@@ -29,8 +29,6 @@ class CoarseSet : public Set<T>{
         try{
             pred = this->head;
             curr = pred->next;
-            pred->printNode();
-            curr->printNode();
             while (curr->key < key){
                 pred = curr;
                 curr = curr->next;
@@ -39,7 +37,6 @@ class CoarseSet : public Set<T>{
                 throw(true);
             }else{
                 Node<T> *node = new Node<T>(element);
-                node->printNode();
                 node->next = curr;
                 pred->next = node;
                 success = true;
@@ -125,7 +122,7 @@ class CoarseSet : public Set<T>{
     void print(){
         Node<T>* current = this->head;
         while (current != NULL){
-            cout << "node: " << current->item << endl;
+            cout << "node: " << current->item << " with key -> " << current->key << endl;
             Node<T> *next = current->next;
             current = next;
         }
