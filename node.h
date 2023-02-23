@@ -1,3 +1,5 @@
+#ifndef NODE_H
+#define NODE_H
 #include <stddef.h>
 #include <iostream>
 
@@ -19,3 +21,4 @@ class Node{
             std::cout << "next: " << this->next << std::endl;
         }
 };
+#endif

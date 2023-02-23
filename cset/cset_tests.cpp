@@ -42,12 +42,45 @@ void test_remove_empty_set(){
   cout << "test_remove_empty_set: passed" << endl;
 }
 
+void test_duplicate_entry(){
+  CoarseSet<string> cset;
+  cset.add("dog");
+  assert((cset.add("dog") == false));
+  cout << "test_duplicate_entry: passed" << endl;
+}
+
+void test_add_5_elements(){
+  CoarseSet<string> cset;
+  string a = "dog";
+  string b = "adhkjaskjafkjadhkjasdkjashakjjkn";
+  string c = "ajdkasladhjladjdjdjjdjddahgfhjlkdashfjlkajfklfjjk";
+  string d = "jdfadafhjjkfjasdlfsdbkjabchksbvabcdaf";
+  string e = "adajbcabckadhjadhabca";
+
+  cset.add(a);
+  cset.add(b);
+  cset.add(c);
+  cset.add(d);
+  cset.add(e);
+
+  assert(cset.contains(a));
+  assert(cset.contains(b));
+  assert(cset.contains(c));
+  assert(cset.contains(d));
+  assert(cset.contains(e));
+
+  cout << "test_add_5_elements: passed" << endl;
+  
+}
+
 int main(){
   
   test_add_int();
   test_add_string();
   test_remove();
   test_remove_empty_set();
+  test_duplicate_entry();
+  test_add_5_elements();
 
   return 0;
 }

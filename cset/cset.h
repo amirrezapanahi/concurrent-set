@@ -42,8 +42,8 @@ class CoarseSet : public Set<T>{
                 success = true;
             }
         }catch (bool duplicate){
-            cout << "Add operation unsuccessful:" << endl;
-            cout << "- Duplicate element" << endl;
+            // cout << "Add operation unsuccessful:" << endl;
+            // cout << "- Duplicate element" << endl;
             success = false;
         }
         this->mutex.unlock(); //unlock mutex so other threads can now access
@@ -76,8 +76,8 @@ class CoarseSet : public Set<T>{
                 throw(true);
             }
         }catch (bool nonexistent){            
-            cout << "Remove operation unsuccessful:" << endl;
-            cout << "- Element doesn't exist" << endl;
+            // cout << "Remove operation unsuccessful:" << endl;
+            // cout << "- Element doesn't exist" << endl;
             success = false;
         }
         this->mutex.unlock();
@@ -106,8 +106,8 @@ class CoarseSet : public Set<T>{
                 throw(true);
             }
         }catch (bool nonexistent){            
-            cout << "Contain operation unsuccessful:" << endl;
-            cout << "- Element does not exist" << endl;
+            // cout << "Contain operation unsuccessful:" << endl;
+            // cout << "- Element does not exist" << endl;
             success = false;
         }
         this->mutex.unlock();
