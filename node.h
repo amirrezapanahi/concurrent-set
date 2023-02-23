@@ -1,4 +1,6 @@
 #include <stddef.h>
+#include <iostream>
+
 template <typename T>
 class Node{
     public:
@@ -8,7 +10,7 @@ class Node{
         Node() = default;
         Node(T item){
             this->item = item;
-            this->key = std::hash<T>{}(item);
+            this->key = std::hash<T>()(item);
             this->next = nullptr;
         }
         void printNode(){

@@ -24,7 +24,7 @@ class CoarseSet : public Set<T>{
     bool add(T element) override{
         bool success = false;
         Node<T> *pred, *curr;
-        size_t key = hash<T>{}(element);
+        size_t key = hash<T>()(element);
         this->mutex.lock(); //activate mutex lock
         try{
             pred = this->head;
@@ -59,7 +59,7 @@ class CoarseSet : public Set<T>{
     
         bool success = false;
         Node<T> *pred, *curr;
-        size_t key = hash<T>{}(element);
+        size_t key = hash<T>()(element);
         
         this->mutex.lock();
         try{
@@ -92,7 +92,7 @@ class CoarseSet : public Set<T>{
     bool contains(T element) override{
         bool success = false;
         Node<T> *curr;
-        size_t key = hash<T>{}(element);
+        size_t key = hash<T>()(element);
 
         this->mutex.lock();
         try{   

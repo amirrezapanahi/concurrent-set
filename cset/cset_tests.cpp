@@ -36,11 +36,18 @@ void test_remove(){
   cout << "test_remove: passed" << endl;
 }
 
+void test_remove_empty_set(){
+  CoarseSet<string> cset;
+  assert((cset.remove("hello") == false));
+  cout << "test_remove_empty_set: passed" << endl;
+}
+
 int main(){
   
   test_add_int();
   test_add_string();
   test_remove();
+  test_remove_empty_set();
 
   return 0;
 }
