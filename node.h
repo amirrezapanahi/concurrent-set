@@ -2,6 +2,7 @@
 #define NODE_H
 #include <stddef.h>
 #include <iostream>
+#include <mutex>
 
 template <typename T>
 class Node{
@@ -9,6 +10,7 @@ class Node{
         T item;
         std::size_t key;
         Node* next;
+        std::recursive_mutex mutex;
         Node() = default;
         Node(T item){
             this->item = item;

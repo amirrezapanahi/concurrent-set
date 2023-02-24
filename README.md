@@ -14,5 +14,16 @@ and that there was no data corruption
 5. decided to put function definitions for each set implementation in header files as not necessary to
 abstract definitions into seperate cpp file given that we only need the 3 fixed functions for this practical
 
+correctness conditions:
+- Linearizability
+- Sequential consistency
+- Quiescent consistency
+- Lock-freedom
+- Wait-freedom
+- Obstruction-freedom
+- Progress guarantee 
+- Abscence of data races
+- Atomicity
+
 theoretical arguments:
 https://www.youtube.com/watch?v=5eGsdrdeBQ8
