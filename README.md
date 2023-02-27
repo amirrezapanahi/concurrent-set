@@ -16,14 +16,17 @@ abstract definitions into seperate cpp file given that we only need the 3 fixed 
 
 correctness conditions:
 - Linearizability
+  - compare a set of operations to a non-concurrent implementation and a concurrent implementation
 - Sequential consistency
-- Quiescent consistency
-- Lock-freedom
-- Wait-freedom
+  - compare a set of operations to a non-concurrent implementaitno and a concurrent implementation
+- Deadlock
+  - CSET = using a recursive mutex allows a thread to acquire the lock multiple times without deadlocking itself
+- Starvation
+  - maybe use yielding threads?
 - Obstruction-freedom
-- Progress guarantee 
-- Abscence of data races
-- Atomicity
 
 theoretical arguments:
 https://www.youtube.com/watch?v=5eGsdrdeBQ8
+
+benchmarking:
+https://www.csd.uoc.gr/~hy486/current/material/assistiveClasses/benchmarks.pdf

@@ -13,5 +13,6 @@ class Set {
     virtual bool add(T element)=0;
     virtual bool remove(T element)=0;
     virtual bool contains(T element)=0;
+    virtual int size()=0;
 };
 #endif

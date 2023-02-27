@@ -1,4 +1,5 @@
 #include "../set.h"
+#include <thread>
 #include <cstdint>
 using namespace std;
 
@@ -42,19 +43,19 @@ template <typename T> class FineSet : public Set<T> {
         newNode->next = curr;
         pred->next = newNode;
         success = true;
+        printf("add(%d) completed by thread - %d \n", element,
+               this_thread::get_id());
       } catch (...) {
         success = false;
+        printf("add(%d) unsuccessful by thread - %d \n", element,
+               this_thread::get_id());
       }
       curr->mutex.unlock();
     } catch (...) {
     }
     pred->mutex.unlock();
 
-    if (success){
-      return true;
-    }else{
-      return false;
-    }
+    return success;
   };
 
   bool remove(T element) override {
@@ -77,51 +78,67 @@ template <typename T> class FineSet : public Set<T> {
         if (curr->key == key){
           pred->next = curr->next;
           success = true;
+          printf("remove(%d) completed by thread - %d \n", element,
+               this_thread::get_id());
         }else{
           throw 505;
         }
       } catch (...) {
         success = false;
+        printf("remove(%d) unsuccessful by thread - %d \n", element,
+               this_thread::get_id());
       }
       curr->mutex.unlock();
     } catch (...) {
     }
     pred->mutex.unlock();
 
-    if (success){
-      return true;
-    }else{
-      return false;
-    }
+    return success;
   };
 
   bool contains(T element) override{
     bool success = false;
     Node<T> *curr = nullptr;
+    Node<T> *pred = nullptr;
     size_t key = hash<T>()(element);
     this->head->mutex.lock();
     try{
-      curr = this->head;
+      pred = this->head;
+      curr = pred->next;
+      curr->mutex.lock();
       while(curr->key < key){
-        curr->mutex.unlock();
+        pred->mutex.unlock();
+        pred = curr;
         curr = curr->next;
         curr->mutex.lock();        
       }
       if (key == curr->key){
         success = true;
+        printf("contains(%d) completed by thread - %d \n", element,
+               this_thread::get_id());
       }else{
         throw 505;
       }
     }catch(...){
+        printf("contains(%d) unsuccessful - %d \n", element,
+               this_thread::get_id());
       success = false;
     }
     curr->mutex.unlock();
+    pred->mutex.unlock();
 
-    if (success){
-      return true;
-    }else{
-      return false;
-    }
+    return success;
     
   };
+
+  int size() override{
+    Node<T> *current = this->head;
+    int count = 0;
+    while (current != NULL) {
+      Node<T> *next = current->next;
+      count++;
+      current = next;
+    }
+    return count-2; //ignore the default min limit and max limit set in place 
+  }
 };

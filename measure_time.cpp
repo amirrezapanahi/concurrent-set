@@ -2,12 +2,12 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include <vector>
 #include <typeinfo>
 #include "./cset/cset.h"
 #include "./fset/fset.h"
 #include "./lset/lset.h"
 #include "./nbset/nbset.h"
+#include "./correctness/ctpl_stl.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ int main(int argc, char*argv[]){
   
   string implementation = argv[2];
   string type = argv[3];
-  int num_threads = stoi(argv[1]);
+  // int num_threads = stoi(argv[1]);
   
   CoarseSet<string> cset;
   FineSet<string> fset;
@@ -47,8 +47,9 @@ int main(int argc, char*argv[]){
   const type_info &obj_type = typeid(&set);
 
   cout << "set: " << obj_type.name() << endl;
+  int num_threads = thread::hardware_concurrency();
   string words[num_threads];
-  vector<thread> threads;
+  ctpl::thread_pool pool(num_threads);
 
   for (int i = 1; i<= num_threads; i++){
     string str = to_string(i);
@@ -59,18 +60,20 @@ int main(int argc, char*argv[]){
 
   for(int i = 0; i<num_threads; i++){
     string arg = words[i];
-    threads.push_back(
-      thread([&set, arg](){
-        set->add(arg);
-      })
-    );
+    pool.push([&set, arg](int){
+      set->add(arg);
+    });
   }
 
-  for(int i = 0; i<num_threads; i++){
-    threads[i].join();
-  }
+  // for(int i = 0; i<num_threads; i++){
+  //   threads[i].join();
+  // }
 
   for (int i = 0; i<num_threads; i++){
+    string arg = words[i];
+    pool.push([&set, arg](int){
+      set->contains(arg);
+    });
     cout << set->contains(words[i]) << endl;
   }
 

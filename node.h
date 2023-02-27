@@ -3,14 +3,18 @@
 #include <stddef.h>
 #include <iostream>
 #include <mutex>
+#include <atomic>
+
+using namespace std;
 
 template <typename T>
 class Node{
     public:
         T item;
-        std::size_t key;
+        size_t key;
         Node* next;
-        std::recursive_mutex mutex;
+        recursive_mutex mutex;
+        bool marked;
         Node() = default;
         Node(T item){
             this->item = item;
