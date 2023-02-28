@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
   CoarseSet<int> cset;
   FineSet<int> fset;
   LazySet<int> lset;
-  // NonBlockingSet<string> nbset;
+  NonBlockingSet<int> nbset;
   Set<int> *set = nullptr;
 
   if (implementation.compare("cset") == 0) {
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   } else if (implementation.compare("lset") == 0) {
     set = &lset;
   } else if (implementation.compare("nbset") == 0) {
-    // set = &nbset;
+    set = &nbset;
   } else {
     cout << "IMPLEMENTATION: \n" << endl;
     cout << "coarse grained set 'cset' \n fine grained set 'fset' \n lazy set "
@@ -59,25 +59,33 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  ctpl::thread_pool pool(3);
-  pool.push([set](int) {
+  cout << endl;
+
+  ctpl::thread_pool pool(6);
+  vector<string> operations;
+    
+  pool.push([set,&pool](int) {
     set->add(1);
   });
 
-  pool.push([set](int) {
+  pool.push([set,&pool](int) {
     set->add(2);
   });
 
-  pool.push([set](int) {
+  pool.push([set,&pool](int) {
     set->remove(1);
   });
 
-  pool.push([set](int) {
+  pool.push([set,&pool](int) {
     set->contains(1);
   });
 
-  pool.push([set](int) {
+  pool.push([set,&pool](int) {
     set->contains(2);
   });
+
+  pool.stop(true);
+
+  cout << endl;
   return 0;
 }

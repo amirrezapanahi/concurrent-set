@@ -1,32 +1,21 @@
-# Notes for report
-----
+# How to run 
 
-1. using abstract class 'set' to act as an interface for the 3 implementations since they
-will all have the same functions 
-2. using templates for each function for performance since any unused function templates will
-not compile saving space complexity
-3. for theoretical arguments:
-  - list premises (hard truths) like "mutexes ensure that there are no race conditions"
-  - show how premises come to a certain conclusion
-  - mention "invariants"
-4. for each test run through the data structure to ensure that everything is in the right place
-and that there was no data corruption
-5. decided to put function definitions for each set implementation in header files as not necessary to
-abstract definitions into seperate cpp file given that we only need the 3 fixed functions for this practical
+1. To run unit tests 
 
-correctness conditions:
-- Linearizability
-  - compare a set of operations to a non-concurrent implementation and a concurrent implementation
-- Sequential consistency
-  - compare a set of operations to a non-concurrent implementaitno and a concurrent implementation
-- Deadlock
-  - CSET = using a recursive mutex allows a thread to acquire the lock multiple times without deadlocking itself
-- Starvation
-  - maybe use yielding threads?
-- Obstruction-freedom
+```$ cd tests```
+```$ g++ tests.cpp -o tests```
+```$ ./tests <IMPLEMENTATION_NAME>````
 
-theoretical arguments:
-https://www.youtube.com/watch?v=5eGsdrdeBQ8
+where implementation_name is either 'cset', 'fset', 'lset' or 'nbset' 
 
-benchmarking:
-https://www.csd.uoc.gr/~hy486/current/material/assistiveClasses/benchmarks.pdf
+2. To run sequential consistency model
+
+``$ cd correctness``
+``$ g++ sequential_consistency.cpp -o seqcons``
+``$ ./seqcons <IMPLEMENTATION_NAME>``
+
+3. To run benchamrking, number of operations in a fixed 5 second time interval
+
+``$ g++ measure_ops.cpp -o measure_ops``
+``$ ./measure_ops <%_ADD> <%_REMOVE> <%_CONTAINS> <IMPLEMENTATION> <RANGE> <NUM_THREADS>``
+

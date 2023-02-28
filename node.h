@@ -4,6 +4,7 @@
 #include <iostream>
 #include <mutex>
 #include <atomic>
+#include "amr.cpp"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class Node{
         T item;
         size_t key;
         Node* next;
+        AtomicMarkableReference* atmc_next;
         recursive_mutex mutex;
         bool marked;
         Node() = default;
@@ -20,6 +22,8 @@ class Node{
             this->item = item;
             this->key = std::hash<T>()(item);
             this->next = nullptr;
+            this->atmc_next = nullptr;
+            this->marked = false;
         }
         void printNode(){
             std::cout << "item: " << this->item << std::endl;

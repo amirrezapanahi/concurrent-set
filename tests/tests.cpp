@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
   CoarseSet<string> cset;
   FineSet<string> fset;
   LazySet<string> lset;
-  // NonBlockingSet<string> nbset;
+  NonBlockingSet<string> nbset;
   Set<string> *set = nullptr;
 
   string implementation = argv[1];
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
   } else if (implementation.compare("lset") == 0) {
     set = &lset;
   } else if (implementation.compare("nbset") == 0) {
-    // set = &nbset;
+    set = &nbset;
   } else {
     cout << "usage: ./main <NUM_THREAD> <IMPLEMENTATION> <TYPE>" << endl;
     cout << "IMPLEMENTATION: \n" << endl;
